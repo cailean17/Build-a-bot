@@ -60,14 +60,17 @@ async def on_ready():
 async def on_message(message):
     if ( message.content == eventstring1):
     
+        #this checks if the the eventstring!(!structures) has been sent in discord chat then sends a message and calls the api to gain information
+        #right now im trying to get simple character info from eve.
+        #Error shows up saying   "op =  await esi.get_operation("get_search") TypeError: object EsiOp can't be used in 'await' expression"
         
         await message.channel.send("Pulling Structure Info")
-            esi = EsiPysi("https://esi.evetech.net/_latest/swagger.json?datasource=tranquility", user_agent="Cailean Blackies")
-            op =  await esi.get_operation("get_search")
-            auth =  await  EsiAuth.from_refresh_token("0c8c24160cd241b2b67a3c4e3b649165", "EFKDvMUZRxvoaMxPsHyrp4Gng57gIN3lkgWgaIYa", "fPV3YRBc8hvU6Cs22_tENN8cm3VEoHrmpxYTMLDZT_A")
-            op.set_auth(auth)
-            result = await op.execute(categories="character", search="Cailean BLACKIES")
-            print(result)
+        esi = EsiPysi("https://esi.evetech.net/_latest/swagger.json?datasource=tranquility", user_agent="Cailean Blackies")
+        op =  await esi.get_operation("get_search")
+        auth =  await  EsiAuth.from_refresh_token("0c8c24160cd241b2b67a3c4e3b649165", "EFKDvMUZRxvoaMxPsHyrp4Gng57gIN3lkgWgaIYa", "fPV3YRBc8hvU6Cs22_tENN8cm3VEoHrmpxYTMLDZT_A")
+        op.set_auth(auth)
+        result = await op.execute(categories="character", search="Cailean BLACKIES")
+        print(result)
 
         
                                    
