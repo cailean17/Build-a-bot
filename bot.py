@@ -6,7 +6,8 @@ from esipysi import EsiPysi
 
 
 esi = EsiPysi("https://esi.evetech.net/_latest/swagger.json?datasource=tranquility", user_agent="Cailean Blackies")
-
+ 
+#loads  discrod auth token and server name from .env file. Ensures security and eliminates hardcoding.
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 guild = os.getenv('DISCORD_GUILD')
