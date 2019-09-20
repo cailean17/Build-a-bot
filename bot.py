@@ -3,14 +3,39 @@ import os
 import discord
 from dotenv import load_dotenv
 from esipysi import EsiPysi
+from esipysi import EsiAuth
+import requests
+from esipysi import EsiAuth
+import asyncio
+import aiohttp
+import time
+from asgiref.sync import sync_to_async
 
 
-esi = EsiPysi("https://esi.evetech.net/_latest/swagger.json?datasource=tranquility", user_agent="Cailean Blackies")
- 
-#loads  discrod auth token and server name from .env file. Ensures security and eliminates hardcoding.
+
+
+
+
+
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 guild = os.getenv('DISCORD_GUILD')
+
+
+
+headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Basic MGM4YzI0MTYwY2QyNDFiMmI2N2EzYzRlM2I2NDkxNjU6RUZLRHZNVVpSeHZvYU14UHNIeXJwNEduZzU3Z0lOM2xrZ1dnYUlZYQ==',
+}
+
+data = '{"grant_type":"authorization_code", "code":"_0qJOz47pKnEX9eWenXXamiaDQlhM3fxz_fYs_XCzd1Y9xbhSEWjgNl3Qro7xAn-"}'
+
+response = requests.post('https://login.eveonline.com/oauth/token', headers=headers, data=data)
+
+print(response.text)
+
+
+
 
 
 
@@ -33,13 +58,21 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if (message.content == eventstring1):
+    if ( message.content == eventstring1):
     
         
         await message.channel.send("Pulling Structure Info")
+            esi = EsiPysi("https://esi.evetech.net/_latest/swagger.json?datasource=tranquility", user_agent="Cailean Blackies")
+            op =  await esi.get_operation("get_search")
+            auth =  await  EsiAuth.from_refresh_token("0c8c24160cd241b2b67a3c4e3b649165", "EFKDvMUZRxvoaMxPsHyrp4Gng57gIN3lkgWgaIYa", "fPV3YRBc8hvU6Cs22_tENN8cm3VEoHrmpxYTMLDZT_A")
+            op.set_auth(auth)
+            result = await op.execute(categories="character", search="Cailean BLACKIES")
+            print(result)
+
+        
                                    
     
     
-    
+     
 
 client.run(token)
