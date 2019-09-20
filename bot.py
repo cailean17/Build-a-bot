@@ -9,7 +9,6 @@ from esipysi import EsiAuth
 import asyncio
 import aiohttp
 import time
-from asgiref.sync import sync_to_async
 
 
 
